@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	f, err := os.Open("./test/example.monopic")
+	f, err := os.Open("./research/example.monopic")
 	if err != nil {
 		log.Fatalf("error opening file: %v\n", err)
 	}
