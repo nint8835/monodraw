@@ -26,28 +26,35 @@ func DecodeMonopic(reader io.Reader) (interface{}, error) {
 		return nil, ErrInvalidHeader
 	}
 
-	fmt.Printf("%#+v\n", header)
-
 	gzipReader, err := gzip.NewReader(reader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating gzip reader: %w", err)
 	}
+	defer gzipReader.Close()
 
-	fileContents, err := DecodeJson(gzipReader)
+	var fileContents map[string]interface{}
+
+	err = json.NewDecoder(gzipReader).Decode(&fileContents)
 	if err != nil {
-		return nil, fmt.Errorf("error decoding file data: %v", err)
+		return nil, fmt.Errorf("error decoding json: %w", err)
 	}
 
 	return fileContents, nil
 }
 
-func DecodeJson(reader io.Reader) (interface{}, error) {
-	var data map[string]interface{}
-
-	err := json.NewDecoder(reader).Decode(&data)
+func EncodeMonopic(writer io.Writer, data interface{}) error {
+	_, err := writer.Write(headerBytes)
 	if err != nil {
-		return nil, fmt.Errorf("error decoding json: %w", err)
+		return fmt.Errorf("error writing file header: %w", err)
 	}
 
-	return data, nil
+	gzipWriter := gzip.NewWriter(writer)
+	defer gzipWriter.Close()
+
+	err = json.NewEncoder(gzipWriter).Encode(data)
+	if err != nil {
+		return fmt.Errorf("error encoding json: %w", err)
+	}
+
+	return nil
 }
