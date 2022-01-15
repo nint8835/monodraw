@@ -18,6 +18,34 @@ JSON contains an object with two keys:
 
 The objects contained in the `objects` object can be of a variety of types, identified by the key `type_id`.
 
+### Shape
+Class name: `HTModelShape`
+
+This object type does not have a unique type ID, but is rather a base class of most other object types
+
+| Attribute             | Description                                                                                                                       | Type        |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------|-------------|
+| `shape_type`          | Unique identifier of the type of shape.                                                                                           | `int`       |
+| `cthrough`            | Controls clickthrough (whether click events pass through this shape to the shapes underneath)                                     | `bool`      |
+| `name`                | Name of the shape that will appear in the sidebar.                                                                                | `str`       |
+| `name_edited`         | Whether the user has edited the name from it's default value. Will cause the app to stop trying to automatically update the name. | `bool`      |
+| `origin`              | Origin point of the shape. Used to control the position. Stored as a string of format `x,y`.                                      | `str`       |
+| `tag`                 |                                                                                                                                   | `int`       |
+| `hidden`              | Whether or not this shape is hidden.                                                                                              | `bool`      |
+| `locked`              | Whether or not this shape is locked.                                                                                              | `bool`      |
+| `surface_pos_enabled` |                                                                                                                                   | `bool`      |
+| `attachable`          | Whether shapes should be permitted to be attached to this shape's attachment points.                                              | `bool`      |
+| `content_blended`     | Whether the shape should be blended.                                                                                              | `bool`      |
+| `content_color`       | The shape's content color.                                                                                                        | `int`       |
+| `shadow_enabled`      | Whether the shape has a shadow enabled.                                                                                           | `bool`      |
+| `shadow_offset`       | Offset of the shadow, if enabled. Stored as a string of format `x,y`                                                              | `str`       |
+| `shadow_tixel`        |                                                                                                                                   |             |
+| `shadow_intensity`    | Intensity of the shadow, if enabled. Low = `1`, Medium = `2`, High = `3`, Full = `4`                                              | `int`       |
+| `shadow_color`        | Color of the shadow.                                                                                                              | `int`       |
+| `subshape_refs`       | Object IDs of any shapes contained within / belonging to this shape.                                                              | `List[str]` |
+| `position_refs`       | Object IDs of any positioning-related objects belonging to this shape.                                                            | `List[str]` |
+
+
 ### `0`: Document
 Class name: `HTModelDocument`
 
@@ -36,56 +64,22 @@ Type that all other objects will go placed in. Effectively the root of the tree 
 
 If a file does not contain a canvas, attempting to edit it will do nothing.
 
-| Attribute             | Description                                                                                                                   | Type            |
-|-----------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| `locked`              | Locked state of this canvas.                                                                                                  | `bool`          |
-| `hidden`              | Hidden state of this canvas.                                                                                                  | `bool`          |
-| `shadow_enabled`      |                                                                                                                               | `bool`          |
-| `name_edited`         | Denotes whether or not the name has been changed from it's default value by the user. Likely not triggerable by normal usage. | `bool`          |
-| `shadow_color`        |                                                                                                                               | `int`           |
-| `content_blended`     |                                                                                                                               | `bool`          |
-| `shape_type`          | Type of shape. Will be `6` for canvas.                                                                                        | `int`           |
-| `origin`              |                                                                                                                               | `str`           |
-| `tag`                 |                                                                                                                               | `int`           |
-| `name`                | Name of this canvas.                                                                                                          | `str`           |
-| `position_refs`       |                                                                                                                               | `List[Unknown]` |
-| `doc_ref`             | Object ID of the [Document](#0-document) containing this canvas.                                                              | `str`           |
-| `surface_pos_enabled` |                                                                                                                               | `bool`          |
-| `content_color`       |                                                                                                                               | `int`           |
-| `subshape_refs`       | Object IDs of other objects contained within this canvas.                                                                     | `List[str]`     |
-| `shadow_offset`       |                                                                                                                               | `str`           |
-| `shadow_intensity`    |                                                                                                                               | `int`           |
-| `shadow_tixel`        |                                                                                                                               | `str`           |
-| `cthrough`            |                                                                                                                               | `bool`          |
-| `attachable`          |                                                                                                                               | `bool`          |
+Inherits from [Shape](#shape).
+
+| Attribute | Description                                                      | Type  |
+|-----------|------------------------------------------------------------------|-------|
+| `doc_ref` | Object ID of the [Document](#0-document) containing this canvas. | `str` |
 
 ### `3`: Group
 Class name: `HTModelGroupShape`
 
 A group of objects.
 
+Inherits from [Shape](#shape).
+
 | Attribute             | Description                                                                                                           | Type            |
 |-----------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------|
-| `locked`              | Locked state of this group.                                                                                           | `bool`          |
-| `hidden`              | Hidden state of this group.                                                                                           | `bool`          |
-| `shadow_enabled`      |                                                                                                                       | `bool`          |
-| `name_edited`         | Denotes whether or not the name has been changed from it's default value by the user.                                 | `bool`          |
-| `shadow_color`        |                                                                                                                       | `int`           |
-| `content_blended`     |                                                                                                                       | `bool`          |
-| `shape_type`          | Type of shape. Will be `8` for group.                                                                                 | `int`           |
-| `origin`              |                                                                                                                       | `str`           |
-| `tag`                 |                                                                                                                       | `int`           |
-| `name`                | Name of this group.                                                                                                   | `str`           |
-| `position_refs`       |                                                                                                                       | `List[Unknown]` |
 | `doc_ref`             | Object ID of the [Document](#0-document) containing this group.                                                       | `str`           |
-| `surface_pos_enabled` |                                                                                                                       | `bool`          |
-| `content_color`       |                                                                                                                       | `int`           |
-| `subshape_refs`       | Object IDs of other objects contained within this group.                                                              | `List[str]`     |
-| `shadow_offset`       |                                                                                                                       | `str`           |
-| `shadow_intensity`    |                                                                                                                       | `int`           |
-| `shadow_tixel`        |                                                                                                                       | `str`           |
-| `cthrough`            |                                                                                                                       | `bool`          |
-| `attachable`          |                                                                                                                       | `bool`          |
 | `subshape_selection`  | Value of the "Allow sub-shape selection" option on the group. Will not be present if the option hasn't been modified. | `bool`          |
 
 ### `5`: Line
