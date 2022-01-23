@@ -39,12 +39,12 @@ This object type does not have a unique type ID, but is rather a base class of m
 | `content_color`       | The shape's content color.                                                                                                        | `int`       |
 | `shadow_enabled`      | Whether the shape has a shadow enabled.                                                                                           | `bool`      |
 | `shadow_offset`       | Offset of the shadow, if enabled. Stored as a string of format `x,y`                                                              | `str`       |
-| `shadow_tixel`        |                                                                                                                                   |             |
+| `shadow_tixel`        |                                                                                                                                   | `str`       |
 | `shadow_intensity`    | Intensity of the shadow, if enabled. Low = `1`, Medium = `2`, High = `3`, Full = `4`                                              | `int`       |
 | `shadow_color`        | Color of the shadow.                                                                                                              | `int`       |
 | `subshape_refs`       | Object IDs of any shapes contained within / belonging to this shape.                                                              | `List[str]` |
 | `position_refs`       | Object IDs of any positioning-related objects belonging to this shape.                                                            | `List[str]` |
-
+| `doc_ref`             | Object ID of the [Document](#0-document) containing this shape.                                                                   | `str`       |
 
 ### `0`: Document
 Class name: `HTModelDocument`
@@ -54,7 +54,7 @@ Root type all other object types are eventually contained within.
 | Attribute           | Description                                                                      | Type             |
 |---------------------|----------------------------------------------------------------------------------|------------------|
 | `alphabet`          | Type of alphabet to use for this document. `1` for Unicode, `2` for ASCII.       | `int`            |
-| `shape_seq_numbers` | Unknown. Appears to be `{"6": 1}` in all files I've inspected so far.            | `Dict[str, int]` |
+| `shape_seq_numbers` |                                                                                  | `Dict[str, int]` |
 | `canvas_refs`       | Array of object IDs referring to the [Canvases](#1-canvas) within this document. | `List[str]`      |
 
 ### `1`: Canvas
@@ -65,10 +65,6 @@ Type that all other objects will go placed in. Effectively the root of the tree 
 If a file does not contain a canvas, attempting to edit it will do nothing.
 
 Inherits from [Shape](#shape).
-
-| Attribute | Description                                                      | Type  |
-|-----------|------------------------------------------------------------------|-------|
-| `doc_ref` | Object ID of the [Document](#0-document) containing this canvas. | `str` |
 
 ### `3`: Group
 Class name: `HTModelGroupShape`
