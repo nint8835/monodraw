@@ -1,2 +1,2 @@
 # monodraw
-Go library for working with Monodraw's .monopic files
+Reverse engineering effort for Monodraw's .monopic files
