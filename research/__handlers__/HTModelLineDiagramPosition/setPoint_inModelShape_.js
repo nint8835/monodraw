@@ -5,7 +5,7 @@
  * For full API reference, see: https://frida.re/docs/javascript-api/
  */
 
-{
+defineHandler({
   /**
    * Called synchronously when about to call -[HTModelLineDiagramPosition setPoint:inModelShape:].
    *
@@ -35,4 +35,4 @@
    */
   onLeave(log, retval, state) {
   }
-}
+});
