@@ -1,0 +1,10 @@
+{
+    "prettier.prettierPath": "research/node_modules/prettier",
+    "prettier.configPath": "research/prettier.config.js",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.sortImports": "always",
+        "source.removeUnusedImports": "always"
+    }
+}
