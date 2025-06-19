@@ -14,7 +14,7 @@ function getClassHierarchy(objcObject: ObjC.Object): ObjC.Object[] {
     return hierarchy;
 }
 
-const persistableClasses: ObjC.Object[] = [];
+const classMethods: Record<string, string[]> = {};
 
 for (const [className, objcClass] of Object.entries(ObjC.classes)) {
     if (!className.startsWith('HTModel')) {
@@ -25,7 +25,9 @@ for (const [className, objcClass] of Object.entries(ObjC.classes)) {
 
     // Persistable objects inherit from HTModelPersistentObject
     if (hierarchy.some((c) => c.$className === 'HTModelPersistentObject')) {
-        persistableClasses.push(objcClass);
+        classMethods[className] = objcClass.$ownMethods;
         console.log(`Found persistable class: ${objcClass.$className}`);
     }
 }
+
+console.log(JSON.stringify(classMethods, null, 2));
