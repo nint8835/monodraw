@@ -7,6 +7,8 @@
         "noEmit": true,
         "strict": true,
         "esModuleInterop": true,
-        "rootDir": "agent"
+        "rootDir": "agent",
+        "moduleResolution": "nodenext",
+        "module": "nodenext"
     }
 }

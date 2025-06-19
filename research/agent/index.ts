@@ -1,3 +1,5 @@
+import ObjC from 'frida-objc-bridge';
+
 if (!ObjC.available) {
     throw new Error('Objective-C runtime is not loaded');
 }
